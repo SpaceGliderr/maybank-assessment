@@ -1,12 +1,27 @@
-import { Box, IconButton, Card, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Card,
+  CardContent,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import SearchIcon from "@mui/icons-material/Search";
 import { getProducts } from "../api";
 
 const ProductListing = (props) => {
   const { isDashboard } = props;
 
   const products = getProducts();
+
+  const onEditClick = () => {};
+
+  const onDeleteClick = () => {};
 
   const renderProducts = () => {
     return (
@@ -17,16 +32,19 @@ const ProductListing = (props) => {
               key={product.productSKU}
               variant="outlined"
               sx={{
-                margin: "0.5em 0 0.5em 0",
+                m: "0.5em 0 0.75em 0",
                 "& .MuiCardContent-root:last-child": {
-                  paddingBottom: "16px",
+                  pb: "16px",
+                  boxShadow: "6px 10px #888888",
                 },
               }}
             >
               <CardContent sx={{ display: "flex", alignItems: "center" }}>
-                <Box component="div" sx={{ flexGrow: "1" }}>
-                  <Typography variant="h6">{product.productName}</Typography>
-                  <Typography variant="h6">
+                <Box component="div" sx={{ flexGrow: "1", pl: "8px" }}>
+                  <Typography variant="h6" sx={{ mb: "4px" }}>
+                    {product.productName}
+                  </Typography>
+                  <Typography variant="body2">
                     Quantity: {product.productQuantity}
                   </Typography>
                 </Box>
@@ -38,10 +56,10 @@ const ProductListing = (props) => {
                       flexDirection: "column",
                     }}
                   >
-                    <IconButton>
+                    <IconButton onClick={onEditClick}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={onDeleteClick}>
                       <DeleteIcon />
                     </IconButton>
                   </Box>
@@ -54,7 +72,40 @@ const ProductListing = (props) => {
     );
   };
 
-  return <Box>{renderProducts()}</Box>;
+  return (
+    <>
+      <Box
+        component="div"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          mb: "1em",
+        }}
+      >
+        <TextField
+          size="small"
+          placeholder="Search"
+          InputProps={{
+            type: "search",
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ flex: "1 1 auto", mr: "0.75em" }}
+        />
+        <IconButton>
+          <FilterListIcon />
+        </IconButton>
+        <IconButton>
+          <RefreshIcon />
+        </IconButton>
+      </Box>
+      {renderProducts()}
+    </>
+  );
 };
 
 export default ProductListing;
