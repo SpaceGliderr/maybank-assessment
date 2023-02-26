@@ -1,0 +1,37 @@
+[
+  {
+    "productSKU": "SKU1001",
+    "productName": "Samsung Galaxy S23 Ultra",
+    "productQuantity": 10
+  },
+  {
+    "productSKU": "SKU1002",
+    "productName": "iPhone 14",
+    "productQuantity": 13
+  },
+  {
+    "productSKU": "SKU1003",
+    "productName": "Apple Air Pods",
+    "productQuantity": 24
+  },
+  {
+    "productSKU": "SKU1004",
+    "productName": "M1 Macbook Air 2021",
+    "productQuantity": 5
+  },
+  {
+    "productSKU": "SKU1005",
+    "productName": "MoonDrop Starfield IEMs",
+    "productQuantity": 16
+  },
+  {
+    "productSKU": "SKU1006",
+    "productName": "Sony WF-1000 XM4",
+    "productQuantity": 20
+  },
+  {
+    "productSKU": "SKU1007",
+    "productName": "HP Envy x360",
+    "productQuantity": 7
+  }
+]
