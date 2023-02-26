@@ -40,7 +40,11 @@ const NavigationDrawer = () => {
       <List>
         {productDrawerItems.map((item) => {
           return (
-            <Link key={item.key} to={item.href}>
+            <Link
+              key={item.key}
+              to={item.href}
+              style={{ textDecoration: "none", color: "initial" }}
+            >
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
@@ -68,7 +72,7 @@ const NavigationDrawer = () => {
         display: "block",
         width: "20vw",
         height: "100vh",
-        marginRight: "3em",
+        marginRight: "2.5em",
       }}
     >
       <Drawer
