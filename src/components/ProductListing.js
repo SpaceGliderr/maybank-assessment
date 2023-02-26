@@ -34,8 +34,7 @@ const ProductListing = (props) => {
               sx={{
                 m: "0.5em 0 0.75em 0",
                 "& .MuiCardContent-root:last-child": {
-                  pb: "16px",
-                  boxShadow: "6px 10px #888888",
+                  pb: "20px",
                 },
               }}
             >
