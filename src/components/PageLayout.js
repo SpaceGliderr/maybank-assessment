@@ -6,7 +6,7 @@ const PageLayout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <NavigationDrawer />
-      <Box component="div" sx={{ display: "block" }}>
+      <Box component="div" sx={{ flex: "1 1 auto", marginRight: "2.5em" }}>
         <Outlet />
       </Box>
     </Box>
