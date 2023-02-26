@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   List,
   ListItem,
@@ -13,6 +14,7 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link } from "react-router-dom";
+import Logo from "../assets/marketplace-logo.jpg";
 
 const NavigationDrawer = () => {
   const productDrawerItems = [
@@ -33,11 +35,14 @@ const NavigationDrawer = () => {
 
   const drawer = (
     <>
-      {/* TODO: Replace this with a logo */}
-      <Typography variant="h4">LOGO</Typography>
-      <Divider />
-      <Typography variant="h6">Products</Typography>
-      <List>
+      <Box component="div" sx={{ display: "block", m: "1em" }}>
+        <Box component="img" src={Logo} sx={{ width: "100%" }} />
+      </Box>
+      <Divider sx={{ mb: "1em" }} />
+      <Typography variant="subtitle2" sx={{ ml: "1em", mb: "5px" }}>
+        Products
+      </Typography>
+      <List disablePadding>
         {productDrawerItems.map((item) => {
           return (
             <Link
@@ -45,9 +50,11 @@ const NavigationDrawer = () => {
               to={item.href}
               style={{ textDecoration: "none", color: "initial" }}
             >
-              <ListItem disablePadding>
+              <ListItem disablePadding sx={{ pb: "0.2em" }}>
                 <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: 0, mr: "0.7em" }}>
+                    {item.icon}
+                  </ListItemIcon>
                   <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
@@ -57,10 +64,53 @@ const NavigationDrawer = () => {
       </List>
       <Box
         component="div"
-        sx={{ bottom: 0, position: "absolute", width: "inherit" }}
+        sx={{
+          bottom: 0,
+          position: "absolute",
+          width: "inherit",
+        }}
       >
         <Divider />
-        <Typography variant="h4">ACCOUNTS</Typography>
+        <Box
+          component="div"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "left",
+            p: "20px",
+          }}
+        >
+          <Avatar sx={{ mr: "15px" }}>NL</Avatar>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            <Typography
+              variant="body1"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              Nicholas Lee
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              nilchyyy@gmail.com
+            </Typography>
+          </Box>
+        </Box>
       </Box>
     </>
   );
