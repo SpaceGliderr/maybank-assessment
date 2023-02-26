@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import PageLayout from "./components/PageLayout";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Products from "./pages/Products";
+import CreateProduct from "./pages/CreateProduct";
+import Dashboard from "./pages/Dashboard";
+import { useEffect } from "react";
+import dummyProductsData from "./data/data.json";
+import { upsertProduct } from "./api";
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    // Initialize dummy products data into the local storage
+    localStorage.clear();
+    dummyProductsData.forEach((item) => {
+      upsertProduct(item);
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<PageLayout />}>
+            <Route index element={<Products />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/create" element={<CreateProduct />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
-}
+};
 
 export default App;
