@@ -72,7 +72,6 @@ const NavigationDrawer = () => {
         display: "block",
         width: "20vw",
         height: "100vh",
-        marginRight: "2.5em",
       }}
     >
       <Drawer
