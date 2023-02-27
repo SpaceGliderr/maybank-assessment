@@ -1,4 +1,5 @@
 import {
+  AppBar,
   Avatar,
   Box,
   List,
@@ -8,6 +9,9 @@ import {
   ListItemText,
   Divider,
   Drawer,
+  IconButton,
+  SwipeableDrawer,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import ViewListIcon from "@mui/icons-material/ViewList";
@@ -15,8 +19,19 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link } from "react-router-dom";
 import Logo from "../assets/marketplace-logo.jpg";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState } from "react";
 
 const NavigationDrawer = () => {
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("lg"));
+
+  console.log(theme.breakpoints);
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const productDrawerItems = [
     { key: "products", label: "Products", href: "/", icon: <ViewListIcon /> },
     {
@@ -51,7 +66,11 @@ const NavigationDrawer = () => {
               style={{ textDecoration: "none", color: "initial" }}
             >
               <ListItem disablePadding sx={{ pb: "0.2em" }}>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    setIsDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon sx={{ minWidth: 0, mr: "0.7em" }}>
                     {item.icon}
                   </ListItemIcon>
@@ -116,26 +135,56 @@ const NavigationDrawer = () => {
   );
 
   return (
-    <Box
-      component="nav"
-      sx={{
-        display: "block",
-        width: "20vw",
-        height: "100vh",
-      }}
-    >
-      <Drawer
-        variant="permanent"
-        open
-        sx={{
-          "& .MuiDrawer-paper": {
+    <>
+      <AppBar component="nav" position="fixed" sx={{ display: { lg: "none" } }}>
+        <Toolbar sx={{ p: "1em", justifyContent: "center" }}>
+          <IconButton
+            onClick={() => {
+              setIsDrawerOpen(true);
+            }}
+            sx={{ position: "absolute", left: "1em", pl: 0 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Box component="img" src={Logo} sx={{ width: "50%" }} />
+        </Toolbar>
+      </AppBar>
+      {desktop ? (
+        <Box
+          component="nav"
+          sx={{
+            display: "block",
             width: "20vw",
-          },
-        }}
-      >
-        {drawer}
-      </Drawer>
-    </Box>
+            height: "100vh",
+          }}
+        >
+          <Drawer
+            variant="permanent"
+            open
+            sx={{
+              "& .MuiDrawer-paper": {
+                width: "20vw",
+              },
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+      ) : (
+        <SwipeableDrawer
+          anchor="left"
+          open={isDrawerOpen}
+          onOpen={() => {
+            setIsDrawerOpen(true);
+          }}
+          onClose={() => {
+            setIsDrawerOpen(false);
+          }}
+        >
+          {drawer}
+        </SwipeableDrawer>
+      )}
+    </>
   );
 };
 
