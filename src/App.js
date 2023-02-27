@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import dummyProductsData from "./data/data.json";
 import { upsertProduct } from "./api";
 import EditProduct from "./pages/EditProduct";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const App = () => {
   // Initialize dummy products data into the local storage
@@ -14,8 +15,19 @@ const App = () => {
     upsertProduct(item);
   });
 
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 500,
+        md: 750,
+        lg: 1200,
+      },
+    },
+  });
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageLayout />}>
@@ -29,7 +41,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 };
 
