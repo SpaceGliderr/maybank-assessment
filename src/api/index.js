@@ -8,6 +8,12 @@ export const upsertProduct = (productDetails) => {
   );
 };
 
+export const deleteProductBySKU = (sku) => {
+  const products = JSON.parse(localStorage.getItem("products"));
+  delete products[sku];
+  localStorage.setItem("products", JSON.stringify(products));
+};
+
 export const getProducts = () => {
   return JSON.parse(localStorage.getItem("products"));
 };
