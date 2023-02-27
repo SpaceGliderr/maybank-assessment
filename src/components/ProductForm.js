@@ -108,12 +108,13 @@ const ProductForm = (props) => {
       <Box
         component="form"
         onSubmit={onSubmitForm}
-        sx={{
+        sx={(theme) => ({
           display: "flex",
           flexDirection: "column",
           gap: "1em",
           width: "80%",
-        }}
+          [theme.breakpoints.down("lg")]: { width: "100%" },
+        })}
       >
         {/* SUCCESS / ERROR ALERTS */}
         {Object.values(formErrorStates).some(Boolean) && (
