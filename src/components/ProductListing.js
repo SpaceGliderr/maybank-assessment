@@ -13,13 +13,12 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from "@mui/icons-material/Search";
 import { getProducts } from "../api";
+import { Link } from "react-router-dom";
 
 const ProductListing = (props) => {
   const { isDashboard } = props;
 
   const products = getProducts();
-
-  const onEditClick = () => {};
 
   const onDeleteClick = () => {};
 
@@ -40,6 +39,13 @@ const ProductListing = (props) => {
             >
               <CardContent sx={{ display: "flex", alignItems: "center" }}>
                 <Box component="div" sx={{ flexGrow: "1", pl: "8px" }}>
+                  <Typography
+                    variant="overline"
+                    color="text.secondary"
+                    sx={{ lineHeight: 1.5 }}
+                  >
+                    {product.productSKU}
+                  </Typography>
                   <Typography variant="h6" sx={{ mb: "4px" }}>
                     {product.productName}
                   </Typography>
@@ -55,9 +61,11 @@ const ProductListing = (props) => {
                       flexDirection: "column",
                     }}
                   >
-                    <IconButton onClick={onEditClick}>
-                      <EditIcon />
-                    </IconButton>
+                    <Link to={`edit/${product.productSKU}`}>
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </Link>
                     <IconButton onClick={onDeleteClick}>
                       <DeleteIcon />
                     </IconButton>
