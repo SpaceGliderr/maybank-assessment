@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import { useEffect } from "react";
 import dummyProductsData from "./data/data.json";
 import { upsertProduct } from "./api";
+import EditProduct from "./pages/EditProduct";
 
 const App = () => {
   useEffect(() => {
@@ -24,6 +25,10 @@ const App = () => {
             <Route index element={<Products />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create" element={<CreateProduct />} />
+            <Route
+              path="/dashboard/edit/:productSKU"
+              element={<EditProduct />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
