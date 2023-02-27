@@ -25,6 +25,7 @@ const ProductForm = (props) => {
     productQuantity: false,
   });
   const [formSubmitSuccess, setFormSubmitSuccess] = useState(false);
+  const [productDeleteSuccess, setProductDeleteSuccess] = useState(false);
 
   const onSubmitForm = (event) => {
     // Form validation
@@ -85,6 +86,7 @@ const ProductForm = (props) => {
 
   const onDeleteClick = () => {
     deleteProductBySKU(editProductDetails.productSKU);
+    setProductDeleteSuccess(true);
   };
 
   return (
@@ -113,13 +115,19 @@ const ProductForm = (props) => {
             Plese fill in the required fields to continue.
           </Alert>
         )}
-        {formSubmitSuccess && (
+        {(formSubmitSuccess || productDeleteSuccess) && (
           <Alert
             variant="filled"
             severity="success"
             sx={{ boxSizing: "border-box" }}
           >
-            Product was successfully created!
+            Product was successfully{" "}
+            {formSubmitSuccess && editProductDetails
+              ? "edited"
+              : formSubmitSuccess
+              ? "created"
+              : "deleted"}
+            !
           </Alert>
         )}
         {/* PRODUCT SKU */}
@@ -204,21 +212,43 @@ const ProductForm = (props) => {
             Product quantity needs to be more than 0
           </FormHelperText>
         )}
-        <Box component="div" sx={{ display: "block" }}>
+        <Box
+          component="div"
+          sx={{
+            display: "flex",
+            mt: "1em",
+            justifyContent: "space-between",
+          }}
+        >
           {editProductDetails && productDetails.productQuantity === 0 ? (
-            <Button onClick={onDeleteClick}>Delete</Button>
+            <Button
+              variant="contained"
+              color="error"
+              size="large"
+              onClick={onDeleteClick}
+              disabled={productDeleteSuccess}
+            >
+              Delete
+            </Button>
           ) : (
-            <Button type="submit">
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              size="large"
+            >
               {editProductDetails ? "Save" : "Create"}
             </Button>
           )}
           {!editProductDetails && (
             <Button
+              variant="outlined"
+              size="large"
               onClick={() => {
                 setProductDetails({ productQuantity: 0 });
               }}
             >
-              Clear
+              Clear Form
             </Button>
           )}
         </Box>
