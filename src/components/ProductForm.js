@@ -14,8 +14,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
 const ProductForm = (props) => {
-  const { editProductDetails } = props;
+  const { editProductDetails: edp } = props;
 
+  const [editProductDetails, setEditProductDetails] = useState(edp);
   const [productDetails, setProductDetails] = useState(
     editProductDetails || { productQuantity: 0 }
   );
@@ -44,12 +45,19 @@ const ProductForm = (props) => {
       setFormErrorStates(errorStates);
     } else {
       upsertProduct(productDetails);
-      setProductDetails({ productQuantity: 0 });
+
+      if (editProductDetails) {
+        setEditProductDetails(productDetails);
+      } else {
+        setProductDetails({ productQuantity: 0 });
+      }
+
       setFormSubmitSuccess(true);
     }
   };
 
   const onTextInputChange = (event) => {
+    setFormSubmitSuccess(false);
     setFormErrorStates({
       ...formErrorStates,
       [event.target.name]: false,
@@ -61,6 +69,7 @@ const ProductForm = (props) => {
   };
 
   const onNumericInputChange = (event) => {
+    setFormSubmitSuccess(false);
     setFormErrorStates({
       ...formErrorStates,
       [event.target.name]: false,
@@ -72,6 +81,7 @@ const ProductForm = (props) => {
   };
 
   const onIncrementClick = (increment) => {
+    setFormSubmitSuccess(false);
     setFormErrorStates({
       ...formErrorStates,
       productQuantity: false,
@@ -121,7 +131,7 @@ const ProductForm = (props) => {
             severity="success"
             sx={{ boxSizing: "border-box" }}
           >
-            Product was successfully{" "}
+            Product listing was successfully{" "}
             {formSubmitSuccess && editProductDetails
               ? "edited"
               : formSubmitSuccess
@@ -141,7 +151,7 @@ const ProductForm = (props) => {
           value={productDetails.productSKU || ""}
           onChange={onTextInputChange}
           error={formErrorStates.productSKU}
-          disabled={Boolean(editProductDetails)}
+          disabled={Boolean(editProductDetails) || productDeleteSuccess}
         />
         {formErrorStates.productSKU && (
           <FormHelperText error>Product SKU is required</FormHelperText>
@@ -157,6 +167,7 @@ const ProductForm = (props) => {
           value={productDetails.productName || ""}
           onChange={onTextInputChange}
           error={formErrorStates.productName}
+          disabled={productDeleteSuccess}
         />
         {formErrorStates.productName && (
           <FormHelperText error>Product name is required</FormHelperText>
@@ -170,7 +181,9 @@ const ProductForm = (props) => {
             startIcon={<RemoveIcon />}
             variant="contained"
             onClick={() => onIncrementClick(-1)}
-            disabled={productDetails.productQuantity === 0}
+            disabled={
+              productDetails.productQuantity === 0 || productDeleteSuccess
+            }
             sx={{
               height: "auto",
               borderRadius: "4px 0 0 4px",
@@ -194,6 +207,7 @@ const ProductForm = (props) => {
                 textAlign: "center",
               },
             }}
+            disabled={productDeleteSuccess}
           />
           <Button
             startIcon={<AddIcon />}
@@ -205,6 +219,7 @@ const ProductForm = (props) => {
               boxShadow: "none",
               "& .MuiButton-startIcon": { m: 0 },
             }}
+            disabled={productDeleteSuccess}
           />
         </Box>
         {formErrorStates.productQuantity && (
@@ -236,6 +251,11 @@ const ProductForm = (props) => {
               variant="contained"
               color="success"
               size="large"
+              disabled={
+                JSON.stringify(Object.values(productDetails)) ===
+                (editProductDetails &&
+                  JSON.stringify(Object.values(editProductDetails)))
+              }
             >
               {editProductDetails ? "Save" : "Create"}
             </Button>
