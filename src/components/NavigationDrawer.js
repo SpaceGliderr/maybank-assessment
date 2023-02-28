@@ -136,19 +136,6 @@ const NavigationDrawer = () => {
 
   return (
     <>
-      <AppBar component="nav" position="fixed" sx={{ display: { lg: "none" } }}>
-        <Toolbar sx={{ p: "1em", justifyContent: "center" }}>
-          <IconButton
-            onClick={() => {
-              setIsDrawerOpen(true);
-            }}
-            sx={{ position: "absolute", left: "1em", pl: 0 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Box component="img" src={Logo} sx={{ width: "50%" }} />
-        </Toolbar>
-      </AppBar>
       {desktop ? (
         <Box
           component="nav"
@@ -171,18 +158,41 @@ const NavigationDrawer = () => {
           </Drawer>
         </Box>
       ) : (
-        <SwipeableDrawer
-          anchor="left"
-          open={isDrawerOpen}
-          onOpen={() => {
-            setIsDrawerOpen(true);
-          }}
-          onClose={() => {
-            setIsDrawerOpen(false);
-          }}
-        >
-          {drawer}
-        </SwipeableDrawer>
+        <>
+          <AppBar component="nav" position="fixed">
+            <Toolbar sx={{ p: "0.75em 1em", justifyContent: "center" }}>
+              <IconButton
+                onClick={() => {
+                  setIsDrawerOpen(true);
+                }}
+                sx={{ position: "absolute", left: "1em", pl: 0 }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Box
+                component="img"
+                src={Logo}
+                sx={(theme) => ({
+                  [theme.breakpoints.down("md")]: { width: "50%" },
+                  [theme.breakpoints.only("md")]: { width: "35%" },
+                })}
+              />
+            </Toolbar>
+          </AppBar>
+          <SwipeableDrawer
+            anchor="left"
+            open={isDrawerOpen}
+            onOpen={() => {
+              setIsDrawerOpen(true);
+            }}
+            onClose={() => {
+              setIsDrawerOpen(false);
+            }}
+            sx={{ "& .MuiDrawer-paper": { xs: { width: "80%" } } }}
+          >
+            {drawer}
+          </SwipeableDrawer>
+        </>
       )}
     </>
   );
