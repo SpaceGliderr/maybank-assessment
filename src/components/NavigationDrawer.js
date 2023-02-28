@@ -54,13 +54,16 @@ const NavigationDrawer = () => {
   const drawer = (
     <>
       {/* LOGO */}
-      <Box component="div" sx={{ display: "block", m: "1em" }}>
+      <Box
+        component="div"
+        sx={{ display: "block", p: "1em", bgcolor: "primary.main" }}
+      >
         <Box component="img" src={Logo} sx={{ width: "100%" }} />
       </Box>
       <Divider sx={{ mb: "1em" }} />
 
       {/* PRODUCTS CATEGORY */}
-      <Typography variant="subtitle2" sx={{ ml: "1em", mb: "5px" }}>
+      <Typography variant="overline" sx={{ ml: "1em" }}>
         Products
       </Typography>
       <List disablePadding>
@@ -95,6 +98,7 @@ const NavigationDrawer = () => {
           bottom: 0,
           position: "absolute",
           width: "inherit",
+          bgcolor: "common.white",
         }}
       >
         <Divider />
@@ -160,6 +164,7 @@ const NavigationDrawer = () => {
             sx={{
               "& .MuiDrawer-paper": {
                 width: "20vw",
+                bgcolor: "grey.50",
               },
             }}
           >
@@ -200,6 +205,7 @@ const NavigationDrawer = () => {
             }}
             sx={(theme) => ({
               "& .MuiDrawer-paper": {
+                bgcolor: "grey.50",
                 [theme.breakpoints.only("xs")]: { width: "80%" },
                 [theme.breakpoints.up("xs")]: { width: "400px" },
               },

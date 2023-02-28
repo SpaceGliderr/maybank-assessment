@@ -89,11 +89,12 @@ const ProductListing = (props) => {
                       }}
                     >
                       <Link to={`edit/${product.productSKU}`}>
-                        <IconButton>
+                        <IconButton color="primary">
                           <EditIcon />
                         </IconButton>
                       </Link>
                       <IconButton
+                        color="error"
                         disabled={product.productQuantity !== 0}
                         onClick={() => {
                           deleteProductBySKU(product.productSKU);
