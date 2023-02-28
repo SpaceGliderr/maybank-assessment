@@ -145,6 +145,7 @@ const NavigationDrawer = () => {
   return (
     <>
       {isLaptop ? (
+        // LAPTOP/DESKTOP NAVIGATION DRAWER
         <Box
           component="nav"
           sx={{
@@ -166,6 +167,7 @@ const NavigationDrawer = () => {
           </Drawer>
         </Box>
       ) : (
+        // MOBILE/TABLET NAVIGATION DRAWER
         <>
           <AppBar component="nav" position="fixed">
             <Toolbar sx={{ p: "0.75em 1em", justifyContent: "center" }}>

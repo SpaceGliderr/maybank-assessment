@@ -12,10 +12,18 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import PageTitle from "../components/PageTitle";
 
+/**
+ * Renders a form that allows the user to enter product details.
+ * - The form will create a product if the `editProductDetails` property is not provided
+ * - The form will edit a product if the `editProductDetails` property is provided
+ * - The form will have an option to delete a product if the edited product has a quantity of 0
+ */
 const ProductForm = (props) => {
   const { editProductDetails: edp } = props;
 
+  // Used to track overall changes (after saving changes) to the edited product and tell whether the form is "Edit" or "Create"
   const [editProductDetails, setEditProductDetails] = useState(edp);
+  // Used to track any changes made to the product form
   const [productDetails, setProductDetails] = useState(
     editProductDetails || { productQuantity: 0 }
   );
@@ -30,7 +38,7 @@ const ProductForm = (props) => {
   const onSubmitForm = (event) => {
     setFormSubmitSuccess(false);
 
-    // Form validation
+    // Form error handling
     const errorStates = {
       productSKU: !Boolean(productDetails.productSKU),
       productName: !Boolean(productDetails.productName),
@@ -48,8 +56,10 @@ const ProductForm = (props) => {
       upsertProduct(productDetails);
 
       if (editProductDetails) {
+        // If the form is to edit a product, update the `editProductDetails` state
         setEditProductDetails(productDetails);
       } else {
+        // Otherwise, clear the product form
         setProductDetails({ productQuantity: 0 });
       }
 
@@ -57,27 +67,15 @@ const ProductForm = (props) => {
     }
   };
 
-  const onTextInputChange = (event) => {
+  const onInputChange = (key, updateValue) => {
     setFormSubmitSuccess(false);
     setFormErrorStates({
       ...formErrorStates,
-      [event.target.name]: false,
+      [key]: false,
     });
     setProductDetails({
       ...productDetails,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const onNumericInputChange = (event) => {
-    setFormSubmitSuccess(false);
-    setFormErrorStates({
-      ...formErrorStates,
-      [event.target.name]: false,
-    });
-    setProductDetails({
-      ...productDetails,
-      [event.target.name]: parseInt(event.target.value) || 0,
+      [key]: updateValue,
     });
   };
 
@@ -116,7 +114,7 @@ const ProductForm = (props) => {
           },
         })}
       >
-        {/* SUCCESS / ERROR ALERTS */}
+        {/* FORM SUCCESS / ERROR ALERTS */}
         {Object.values(formErrorStates).some(Boolean) && (
           <Alert
             variant="filled"
@@ -141,7 +139,8 @@ const ProductForm = (props) => {
             !
           </Alert>
         )}
-        {/* PRODUCT SKU */}
+
+        {/* PRODUCT SKU INPUT */}
         <FormLabel required sx={{ display: "block" }}>
           Product SKU
         </FormLabel>
@@ -150,14 +149,17 @@ const ProductForm = (props) => {
           variant="outlined"
           placeholder="Enter product SKU"
           value={productDetails.productSKU || ""}
-          onChange={onTextInputChange}
+          onChange={(event) => {
+            onInputChange(event.target.name, event.target.value);
+          }}
           error={formErrorStates.productSKU}
           disabled={Boolean(editProductDetails) || productDeleteSuccess}
         />
         {formErrorStates.productSKU && (
           <FormHelperText error>Product SKU is required</FormHelperText>
         )}
-        {/* PRODUCT NAME */}
+
+        {/* PRODUCT NAME INPUT */}
         <FormLabel required sx={{ display: "block" }}>
           Product Name
         </FormLabel>
@@ -166,14 +168,17 @@ const ProductForm = (props) => {
           variant="outlined"
           placeholder="Enter product name"
           value={productDetails.productName || ""}
-          onChange={onTextInputChange}
+          onChange={(event) => {
+            onInputChange(event.target.name, event.target.value);
+          }}
           error={formErrorStates.productName}
           disabled={productDeleteSuccess}
         />
         {formErrorStates.productName && (
           <FormHelperText error>Product name is required</FormHelperText>
         )}
-        {/* PRODUCT QUANTITY */}
+
+        {/* PRODUCT QUANTITY INPUT */}
         <FormLabel required sx={{ display: "block" }}>
           Product Quantity
         </FormLabel>
@@ -197,7 +202,12 @@ const ProductForm = (props) => {
             variant="outlined"
             inputProps={{ inputMode: "numeric" }}
             value={productDetails.productQuantity || 0}
-            onChange={onNumericInputChange}
+            onChange={(event) => {
+              onInputChange(
+                event.target.name,
+                parseInt(event.target.value) || 0
+              );
+            }}
             error={formErrorStates.productQuantity}
             sx={{
               flex: "1 1 auto",
@@ -228,6 +238,8 @@ const ProductForm = (props) => {
             Product quantity needs to be more than 0
           </FormHelperText>
         )}
+
+        {/* SUBMISSION BUTTONS */}
         <Box
           component="div"
           sx={(theme) => ({
