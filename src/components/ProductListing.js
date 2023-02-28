@@ -145,19 +145,25 @@ const ProductListing = (props) => {
           <RefreshIcon />
         </IconButton>
       </Box>
-      {renderProducts()}
-      <Pagination
-        count={Math.ceil(Object.values(products).length / pageOffset)}
-        shape="rounded"
-        size="large"
-        onChange={(_, page) => {
-          setPage(page);
-        }}
-        sx={{
-          margin: "1.5em 0 2em",
-          "& .MuiPagination-ul": { justifyContent: "end" },
-        }}
-      />
+      {Object.keys(products).length === 0 ? (
+        <Typography variant="h6">No products found.</Typography>
+      ) : (
+        <>
+          {renderProducts()}
+          <Pagination
+            count={Math.ceil(Object.values(products).length / pageOffset)}
+            shape="rounded"
+            size="large"
+            onChange={(_, page) => {
+              setPage(page);
+            }}
+            sx={{
+              margin: "1.5em 0 2em",
+              "& .MuiPagination-ul": { justifyContent: "end" },
+            }}
+          />
+        </>
+      )}
     </>
   );
 };
