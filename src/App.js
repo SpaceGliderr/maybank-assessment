@@ -3,22 +3,31 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Products from "./pages/Products";
 import CreateProduct from "./pages/CreateProduct";
 import Dashboard from "./pages/Dashboard";
-import { useEffect } from "react";
 import dummyProductsData from "./data/data.json";
 import { upsertProduct } from "./api";
 import EditProduct from "./pages/EditProduct";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const App = () => {
-  useEffect(() => {
-    // Initialize dummy products data into the local storage
-    localStorage.clear();
-    dummyProductsData.forEach((item) => {
-      upsertProduct(item);
-    });
-  }, []);
+  // Initialize dummy products data into the local storage
+  localStorage.clear();
+  dummyProductsData.forEach((item) => {
+    upsertProduct(item);
+  });
+
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 500,
+        md: 750,
+        lg: 1200,
+      },
+    },
+  });
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageLayout />}>
@@ -32,7 +41,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -29,6 +29,8 @@ const ProductForm = (props) => {
   const [productDeleteSuccess, setProductDeleteSuccess] = useState(false);
 
   const onSubmitForm = (event) => {
+    setFormSubmitSuccess(false);
+
     // Form validation
     const errorStates = {
       productSKU: !Boolean(productDetails.productSKU),
@@ -108,12 +110,15 @@ const ProductForm = (props) => {
       <Box
         component="form"
         onSubmit={onSubmitForm}
-        sx={{
+        sx={(theme) => ({
           display: "flex",
           flexDirection: "column",
           gap: "1em",
           width: "80%",
-        }}
+          [theme.breakpoints.down("lg")]: {
+            width: "100%",
+          },
+        })}
       >
         {/* SUCCESS / ERROR ALERTS */}
         {Object.values(formErrorStates).some(Boolean) && (
@@ -229,11 +234,16 @@ const ProductForm = (props) => {
         )}
         <Box
           component="div"
-          sx={{
+          sx={(theme) => ({
             display: "flex",
             mt: "1em",
             justifyContent: "space-between",
-          }}
+            [theme.breakpoints.down("lg")]: {
+              width: "100%",
+              flexDirection: "column",
+              gap: "1em",
+            },
+          })}
         >
           {editProductDetails && productDetails.productQuantity === 0 ? (
             <Button
