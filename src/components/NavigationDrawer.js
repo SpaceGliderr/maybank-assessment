@@ -181,8 +181,8 @@ const NavigationDrawer = () => {
                 component="img"
                 src={Logo}
                 sx={(theme) => ({
-                  [theme.breakpoints.down("md")]: { width: "50%" },
-                  [theme.breakpoints.only("md")]: { width: "35%" },
+                  [theme.breakpoints.only("xs")]: { width: "50%" },
+                  [theme.breakpoints.up("sm")]: { width: "235px" },
                 })}
               />
             </Toolbar>
@@ -196,7 +196,12 @@ const NavigationDrawer = () => {
             onClose={() => {
               setIsDrawerOpen(false);
             }}
-            sx={{ "& .MuiDrawer-paper": { xs: { width: "80%" } } }}
+            sx={(theme) => ({
+              "& .MuiDrawer-paper": {
+                [theme.breakpoints.only("xs")]: { width: "80%" },
+                [theme.breakpoints.up("xs")]: { width: "400px" },
+              },
+            })}
           >
             {drawer}
           </SwipeableDrawer>

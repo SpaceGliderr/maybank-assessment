@@ -17,6 +17,7 @@ const App = () => {
 
   // Create a custom theme to account for different breakpoints
   // - Default MUI breakpoints don't work as well differentiating between mobile and tablets
+  // - And also because the adjusted breakpoints suit the layout of my application more
   const theme = createTheme({
     breakpoints: {
       values: {
