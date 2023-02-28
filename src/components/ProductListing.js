@@ -24,9 +24,10 @@ import { useEffect, useState } from "react";
 const ProductListing = (props) => {
   const { isDashboard } = props;
 
-  const pageOffset = 10;
+  const pageOffset = 10; // How many products to show per page
 
   const [products, setProducts] = useState(getProducts() || {});
+  // Handles the product pagination
   const [page, setPage] = useState(1);
   const [startIdx, setStartIdx] = useState((page - 1) * pageOffset);
 
