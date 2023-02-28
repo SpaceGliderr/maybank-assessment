@@ -19,6 +19,11 @@ const App = () => {
   // - Default MUI breakpoints don't work as well differentiating between mobile and tablets
   // - And also because the adjusted breakpoints suit the layout of my application more
   const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#FFCC00",
+      },
+    },
     breakpoints: {
       values: {
         xs: 0,
