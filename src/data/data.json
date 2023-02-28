@@ -33,5 +33,40 @@
     "productSKU": "SKU1007",
     "productName": "HP Envy x360",
     "productQuantity": 7
+  },
+  {
+    "productSKU": "SKU1008",
+    "productName": "iPad Air 2019",
+    "productQuantity": 32
+  },
+  {
+    "productSKU": "SKU1009",
+    "productName": "OnePlus 8",
+    "productQuantity": 25
+  },
+  {
+    "productSKU": "SKU1010",
+    "productName": "Logitech G Pro Wireless Superlight",
+    "productQuantity": 5
+  },
+  {
+    "productSKU": "SKU1011",
+    "productName": "Audio Technica AT2020",
+    "productQuantity": 19
+  },
+  {
+    "productSKU": "SKU1012",
+    "productName": "PreSonus Studio 24c Amplifier",
+    "productQuantity": 9
+  },
+  {
+    "productSKU": "SKU1013",
+    "productName": "Keychron K2 Wireless",
+    "productQuantity": 10
+  },
+  {
+    "productSKU": "SKU1014",
+    "productName": "HiFiman Sundara Planar Magnetic Headphones",
+    "productQuantity": 2
   }
 ]
