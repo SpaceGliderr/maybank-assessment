@@ -26,14 +26,14 @@ const ProductListing = (props) => {
 
   const pageOffset = 10;
 
-  const [products, setProducts] = useState(getProducts());
+  const [products, setProducts] = useState(getProducts() || {});
   const [page, setPage] = useState(1);
   const [startIdx, setStartIdx] = useState((page - 1) * pageOffset);
 
   useEffect(() => {
     // Listens to changes in the localStorage so that it can update the product listing
     const refetch = () => {
-      setProducts(getProducts());
+      setProducts(getProducts() || {});
     };
 
     window.addEventListener("storage", refetch);
