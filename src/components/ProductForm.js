@@ -2,16 +2,15 @@ import {
   Alert,
   Box,
   Button,
-  Divider,
   FormLabel,
   FormHelperText,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { upsertProduct, deleteProductBySKU } from "../api";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import PageTitle from "../components/PageTitle";
 
 const ProductForm = (props) => {
   const { editProductDetails: edp } = props;
@@ -103,10 +102,7 @@ const ProductForm = (props) => {
 
   return (
     <Box component="div" sx={{ display: "block" }}>
-      <Typography variant="h4" sx={{ mt: "20px" }}>
-        {editProductDetails ? "Edit" : "Create"} Product
-      </Typography>
-      <Divider sx={{ m: "10px 0 20px" }} />
+      <PageTitle title={`${editProductDetails ? "Edit" : "Create"} Product`} />
       <Box
         component="form"
         onSubmit={onSubmitForm}
