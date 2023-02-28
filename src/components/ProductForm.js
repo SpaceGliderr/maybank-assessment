@@ -30,7 +30,6 @@ const ProductForm = (props) => {
   const [formErrorStates, setFormErrorStates] = useState({
     productSKU: false,
     productName: false,
-    productQuantity: false,
   });
   const [formSubmitSuccess, setFormSubmitSuccess] = useState(false);
   const [productDeleteSuccess, setProductDeleteSuccess] = useState(false);
@@ -42,8 +41,6 @@ const ProductForm = (props) => {
     const errorStates = {
       productSKU: !Boolean(productDetails.productSKU),
       productName: !Boolean(productDetails.productName),
-      productQuantity:
-        productDetails.productQuantity === 0 && !editProductDetails,
     };
 
     // Apparently using `preventDefault` with `localStorage` causes a race condition
@@ -81,10 +78,6 @@ const ProductForm = (props) => {
 
   const onIncrementClick = (increment) => {
     setFormSubmitSuccess(false);
-    setFormErrorStates({
-      ...formErrorStates,
-      productQuantity: false,
-    });
     setProductDetails((productDetails) => {
       return {
         ...productDetails,
@@ -94,6 +87,7 @@ const ProductForm = (props) => {
   };
 
   const onDeleteClick = () => {
+    setFormSubmitSuccess(false);
     deleteProductBySKU(editProductDetails.productSKU);
     setProductDeleteSuccess(true);
   };
@@ -208,7 +202,6 @@ const ProductForm = (props) => {
                 parseInt(event.target.value) || 0
               );
             }}
-            error={formErrorStates.productQuantity}
             sx={{
               flex: "1 1 auto",
               "& .MuiOutlinedInput-root": {
@@ -233,11 +226,6 @@ const ProductForm = (props) => {
             disabled={productDeleteSuccess}
           />
         </Box>
-        {formErrorStates.productQuantity && (
-          <FormHelperText error>
-            Product quantity needs to be more than 0
-          </FormHelperText>
-        )}
 
         {/* SUBMISSION BUTTONS */}
         <Box
@@ -253,31 +241,20 @@ const ProductForm = (props) => {
             },
           })}
         >
-          {editProductDetails && productDetails.productQuantity === 0 ? (
-            <Button
-              variant="contained"
-              color="error"
-              size="large"
-              onClick={onDeleteClick}
-              disabled={productDeleteSuccess}
-            >
-              Delete
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              size="large"
-              disabled={
-                JSON.stringify(Object.values(productDetails)) ===
+          <Button
+            type="submit"
+            variant="contained"
+            color="success"
+            size="large"
+            disabled={
+              JSON.stringify(Object.values(productDetails)) ===
                 (editProductDetails &&
-                  JSON.stringify(Object.values(editProductDetails)))
-              }
-            >
-              {editProductDetails ? "Save" : "Create"}
-            </Button>
-          )}
+                  JSON.stringify(Object.values(editProductDetails))) ||
+              productDeleteSuccess
+            }
+          >
+            {editProductDetails ? "Save" : "Create"}
+          </Button>
           {!editProductDetails && (
             <Button
               variant="outlined"
@@ -287,6 +264,17 @@ const ProductForm = (props) => {
               }}
             >
               Clear Form
+            </Button>
+          )}
+          {editProductDetails && productDetails.productQuantity === 0 && (
+            <Button
+              variant="contained"
+              color="error"
+              size="large"
+              onClick={onDeleteClick}
+              disabled={productDeleteSuccess}
+            >
+              Delete
             </Button>
           )}
         </Box>
