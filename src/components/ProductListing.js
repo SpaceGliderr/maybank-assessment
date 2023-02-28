@@ -94,6 +94,7 @@ const ProductListing = (props) => {
                         </IconButton>
                       </Link>
                       <IconButton
+                        disabled={product.productQuantity !== 0}
                         onClick={() => {
                           deleteProductBySKU(product.productSKU);
                           window.dispatchEvent(new Event("storage"));
@@ -144,7 +145,7 @@ const ProductListing = (props) => {
       </Box>
       {renderProducts()}
       <Pagination
-        count={Math.floor(Object.values(products).length / pageOffset) + 1}
+        count={Math.ceil(Object.values(products).length / pageOffset)}
         shape="rounded"
         size="large"
         onChange={(_, page) => {
