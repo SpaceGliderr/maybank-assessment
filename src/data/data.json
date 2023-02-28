@@ -2,7 +2,7 @@
   {
     "productSKU": "SKU1001",
     "productName": "Samsung Galaxy S23 Ultra",
-    "productQuantity": 10
+    "productQuantity": 9
   },
   {
     "productSKU": "SKU1002",
@@ -17,7 +17,7 @@
   {
     "productSKU": "SKU1004",
     "productName": "M1 Macbook Air 2021",
-    "productQuantity": 5
+    "productQuantity": 0
   },
   {
     "productSKU": "SKU1005",
@@ -37,7 +37,7 @@
   {
     "productSKU": "SKU1008",
     "productName": "iPad Air 2019",
-    "productQuantity": 32
+    "productQuantity": 0
   },
   {
     "productSKU": "SKU1009",
@@ -57,16 +57,16 @@
   {
     "productSKU": "SKU1012",
     "productName": "PreSonus Studio 24c Amplifier",
-    "productQuantity": 9
+    "productQuantity": 4
   },
   {
     "productSKU": "SKU1013",
     "productName": "Keychron K2 Wireless",
-    "productQuantity": 10
+    "productQuantity": 12
   },
   {
     "productSKU": "SKU1014",
     "productName": "HiFiman Sundara Planar Magnetic Headphones",
-    "productQuantity": 2
+    "productQuantity": 0
   }
 ]
