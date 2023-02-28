@@ -24,11 +24,14 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
 
+/**
+ * Renders a drawer for users to navigate the application.
+ * - Renders an `AppBar` and a `SwipeableDrawer` if the media screen is a tablet or smaller
+ * - Renders a static `Drawer` if the media screen is a laptop or larger
+ */
 const NavigationDrawer = () => {
   const theme = useTheme();
-  const desktop = useMediaQuery(theme.breakpoints.up("lg"));
-
-  console.log(theme.breakpoints);
+  const isLaptop = useMediaQuery(theme.breakpoints.up("lg"));
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -50,11 +53,17 @@ const NavigationDrawer = () => {
 
   const drawer = (
     <>
-      <Box component="div" sx={{ display: "block", m: "1em" }}>
+      {/* LOGO */}
+      <Box
+        component="div"
+        sx={{ display: "block", p: "1em", bgcolor: "primary.main" }}
+      >
         <Box component="img" src={Logo} sx={{ width: "100%" }} />
       </Box>
       <Divider sx={{ mb: "1em" }} />
-      <Typography variant="subtitle2" sx={{ ml: "1em", mb: "5px" }}>
+
+      {/* PRODUCTS CATEGORY */}
+      <Typography variant="overline" sx={{ ml: "1em" }}>
         Products
       </Typography>
       <List disablePadding>
@@ -81,12 +90,15 @@ const NavigationDrawer = () => {
           );
         })}
       </List>
+
+      {/* USER INFORMATION */}
       <Box
         component="div"
         sx={{
           bottom: 0,
           position: "absolute",
           width: "inherit",
+          bgcolor: "common.white",
         }}
       >
         <Divider />
@@ -136,7 +148,8 @@ const NavigationDrawer = () => {
 
   return (
     <>
-      {desktop ? (
+      {isLaptop ? (
+        // LAPTOP/DESKTOP NAVIGATION DRAWER
         <Box
           component="nav"
           sx={{
@@ -151,6 +164,7 @@ const NavigationDrawer = () => {
             sx={{
               "& .MuiDrawer-paper": {
                 width: "20vw",
+                bgcolor: "grey.50",
               },
             }}
           >
@@ -158,6 +172,7 @@ const NavigationDrawer = () => {
           </Drawer>
         </Box>
       ) : (
+        // MOBILE/TABLET NAVIGATION DRAWER
         <>
           <AppBar component="nav" position="fixed">
             <Toolbar sx={{ p: "0.75em 1em", justifyContent: "center" }}>
@@ -173,8 +188,8 @@ const NavigationDrawer = () => {
                 component="img"
                 src={Logo}
                 sx={(theme) => ({
-                  [theme.breakpoints.down("md")]: { width: "50%" },
-                  [theme.breakpoints.only("md")]: { width: "35%" },
+                  [theme.breakpoints.only("xs")]: { width: "50%" },
+                  [theme.breakpoints.up("sm")]: { width: "235px" },
                 })}
               />
             </Toolbar>
@@ -188,7 +203,13 @@ const NavigationDrawer = () => {
             onClose={() => {
               setIsDrawerOpen(false);
             }}
-            sx={{ "& .MuiDrawer-paper": { xs: { width: "80%" } } }}
+            sx={(theme) => ({
+              "& .MuiDrawer-paper": {
+                bgcolor: "grey.50",
+                [theme.breakpoints.only("xs")]: { width: "80%" },
+                [theme.breakpoints.up("xs")]: { width: "400px" },
+              },
+            })}
           >
             {drawer}
           </SwipeableDrawer>
