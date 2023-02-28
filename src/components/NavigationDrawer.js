@@ -24,11 +24,14 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
 
+/**
+ * Renders a drawer for users to navigate the application.
+ * - Renders an `AppBar` and a `SwipeableDrawer` if the media screen is a tablet or smaller
+ * - Renders a static `Drawer` if the media screen is a laptop or larger
+ */
 const NavigationDrawer = () => {
   const theme = useTheme();
-  const desktop = useMediaQuery(theme.breakpoints.up("lg"));
-
-  console.log(theme.breakpoints);
+  const isLaptop = useMediaQuery(theme.breakpoints.up("lg"));
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -50,10 +53,13 @@ const NavigationDrawer = () => {
 
   const drawer = (
     <>
+      {/* LOGO */}
       <Box component="div" sx={{ display: "block", m: "1em" }}>
         <Box component="img" src={Logo} sx={{ width: "100%" }} />
       </Box>
       <Divider sx={{ mb: "1em" }} />
+
+      {/* PRODUCTS CATEGORY */}
       <Typography variant="subtitle2" sx={{ ml: "1em", mb: "5px" }}>
         Products
       </Typography>
@@ -81,6 +87,8 @@ const NavigationDrawer = () => {
           );
         })}
       </List>
+
+      {/* USER INFORMATION */}
       <Box
         component="div"
         sx={{
@@ -136,7 +144,7 @@ const NavigationDrawer = () => {
 
   return (
     <>
-      {desktop ? (
+      {isLaptop ? (
         <Box
           component="nav"
           sx={{

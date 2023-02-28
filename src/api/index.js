@@ -1,3 +1,5 @@
+// NOTE: This file serves as a mock API file. It serves to mimic the behavior of real API calls
+
 export const upsertProduct = (productDetails) => {
   localStorage.setItem(
     "products",
